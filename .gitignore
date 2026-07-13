@@ -1,0 +1,15 @@
+# Node
+node_modules/
+dist/
+npm-debug.log
+.env
+.env.local
+
+# .NET
+bin/
+obj/
+*.user
+appsettings.Development.json
+
+# Mac
+.DS_Store
