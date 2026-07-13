@@ -8,6 +8,31 @@ A robust, real-time chat application built with a modern stack featuring a .NET 
 - **Database:** PostgreSQL
 - **Storage:** AWS S3 (Presigned URLs for media)
 
+## 📐 High-Level Architecture
+
+```mermaid
+graph TD
+    Client[React Frontend] -->|HTTPS REST| API[API Gateway / Controllers]
+    Client <-->|WebSockets| Hub[SignalR Chat Hub]
+    
+    API --> Services[Business Logic / Services]
+    Hub --> Services
+    
+    Services --> DB[(PostgreSQL)]
+    Services --> S3[(AWS S3 Bucket)]
+    
+    subgraph .NET 8 Backend
+        API
+        Hub
+        Services
+    end
+```
+
+The application follows a **Clean Architecture** approach:
+1. **API Layer**: Handles incoming HTTP requests and WebSocket connections (SignalR) for real-time messaging.
+2. **Core Layer**: Defines domain entities (Users, Chats, Messages) and interfaces (IRepository, IUnitOfWork, IS3Service).
+3. **Infrastructure Layer**: Implements the generic repository pattern using Entity Framework Core, handles JWT authentication, and integrates with AWS S3 for media storage (generating presigned URLs).
+
 ## ⚙️ Configuration & Setup
 
 ### Prerequisites
